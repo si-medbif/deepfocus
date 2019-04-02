@@ -1,0 +1,16 @@
+Bootstrap: docker
+From: ubuntu:18.04
+
+%help
+    Singularity image for DeepPATH
+    
+
+%labels
+MAINTAINER dumrong.mai@biotec.or.th
+VERSION v0.2
+ORIGINAL_SOURCE https://github.com/ncoudray/DeepPATH
+
+%post
+    apt-get update && apt-get install -y --no-install-recommends \
+            python3-dev python3-pip git openslide-tools \
+            build-essential python-setuptools
