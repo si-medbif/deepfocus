@@ -23,10 +23,10 @@ def writeXML(filename,data):
         writer = csv.writer(f)
         writer.writerows(data)
 
-def analyze(imgpath,model,kernelSize):
+def analyze(imgpath,model,args):
 
     imgname=os.path.basename(imgpath)
-    #kernelSize=64;
+    kernelSize=args.kernel;
     kernelStepSize=1;
     bufferVal = 8# will load kernelSize x bufferVal
     stepsize=1
@@ -80,9 +80,9 @@ def analyze(imgpath,model,kernelSize):
     endtime = time.time()
     elapsedtime=endtime-starttime
     print ('elapsed time ' +  str(elapsedtime))
-    outputname= 'output/' + imgname +'-f'+ str(counter2)+'-o'+ str(counter1)+'.png'
+    outputname= args.outpath.rstrip("/") + imgname +'-f'+ str(counter2)+'-o'+ str(counter1)+'.png'
     plt.imsave(outputname, resultMask, cmap=plt.cm.gray)
-    outputname2 ='output/' + imgname + '-f' + str(counter2) + '-o' + str(counter1) + '.csv'
+    outputname2 = args.outpath.rstrip("/") + imgname + '-f' + str(counter2) + '-o' + str(counter1) + '.csv'
     writeXML(outputname2, outputsVec)
     return (counter2,counter1)
 
