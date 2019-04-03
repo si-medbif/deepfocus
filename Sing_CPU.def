@@ -22,7 +22,7 @@ ORIGINAL_SOURCE https://github.com/cialab/deepfocus
     pip3 install matplotlib
     pip3 install scikit-image
     pip3 install openslide-python
-    pip3 install --user --upgrade tensorflow
+    pip3 install tensorflow
     pip3 install tflearn 
     
     # Get DeepFocus scripts
