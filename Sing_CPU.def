@@ -13,8 +13,7 @@ ORIGINAL_SOURCE https://github.com/cialab/deepfocus
 %post
     apt-get update && apt-get install -y --no-install-recommends \
             python3-dev python3-pip git openslide-tools \
-            build-essential python3-setuptools\ 
-            nano            
+            build-essential python3-setuptools nano
     pip3 install wheel
     pip3 install numpy 
     pip3 install scipy  
@@ -27,5 +26,5 @@ ORIGINAL_SOURCE https://github.com/cialab/deepfocus
     
     # Get DeepFocus scripts
     cd /opt && git clone https://github.com/si-medbif/deepfocus.git
-    apt-get remove -y python3-pip git
-    rm -rf /var/lib/apt/lists/*
+    #apt-get remove -y python3-pip git
+    #rm -rf /var/lib/apt/lists/*
