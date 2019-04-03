@@ -34,7 +34,7 @@ def analyze(imgpath,model,kernelSize):
 
     slide = openslide.open_slide(imgpath)
     #tissue detection
-    thumbnail=np.array (slide.get_thumbnail((slide.level_dimensions[0][0]/kernelStepSize,slide.level_dimensions[0][1]/kernelStepSize)))
+    thumbnail=np.array (slide.get_thumbnail((slide.level_dimensions[0][0]/kernelSize,slide.level_dimensions[0][1]/kernelSize)))
     thumbnailGray = color.rgb2gray(thumbnail)
     val = filters.threshold_otsu(thumbnailGray)
     tissueMask = thumbnailGray < max(val,0.8)
