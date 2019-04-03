@@ -80,9 +80,9 @@ def analyze(imgpath,model,args):
     endtime = time.time()
     elapsedtime=endtime-starttime
     print ('elapsed time ' +  str(elapsedtime))
-    outputname= args.outpath.rstrip("/") + imgname +'-f'+ str(counter2)+'-o'+ str(counter1)+'.png'
+    outputname= args.outpath.rstrip("/") +"/" +imgname +'-f'+ str(counter2)+'-o'+ str(counter1)+'.png'
     plt.imsave(outputname, resultMask, cmap=plt.cm.gray)
-    outputname2 = args.outpath.rstrip("/") + imgname + '-f' + str(counter2) + '-o' + str(counter1) + '.csv'
+    outputname2 = args.outpath.rstrip("/") +"/"+ imgname + '-f' + str(counter2) + '-o' + str(counter1) + '.csv'
     writeXML(outputname2, outputsVec)
     return (counter2,counter1)
 
