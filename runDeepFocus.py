@@ -105,9 +105,8 @@ def main(args):
     f.close()
 
 if __name__ == "__main__":
-        """ This is executed when run from the command line """
+    """ This is executed when run from the command line """
     parser = argparse.ArgumentParser()
-
     # Required positional argument
     parser.add_argument(
         "-i",
