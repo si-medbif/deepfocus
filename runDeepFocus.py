@@ -14,6 +14,7 @@ import time
 import os
 import glob
 import csv
+import argparse
 #version 1.0 generated on 6/15/2016
 
 
@@ -22,10 +23,10 @@ def writeXML(filename,data):
         writer = csv.writer(f)
         writer.writerows(data)
 
-def analyze(imgpath,model):
+def analyze(imgpath,model,kernelSize):
 
     imgname=os.path.basename(imgpath)
-    kernelSize=64;
+    #kernelSize=64;
     kernelStepSize=1;
     bufferVal = 8# will load kernelSize x bufferVal
     stepsize=1
@@ -33,7 +34,7 @@ def analyze(imgpath,model):
 
     slide = openslide.open_slide(imgpath)
     #tissue detection
-    thumbnail=np.array (slide.get_thumbnail((slide.level_dimensions[0][0]/64,slide.level_dimensions[0][1]/64)))
+    thumbnail=np.array (slide.get_thumbnail((slide.level_dimensions[0][0]/kernelStepSize,slide.level_dimensions[0][1]/kernelStepSize)))
     thumbnailGray = color.rgb2gray(thumbnail)
     val = filters.threshold_otsu(thumbnailGray)
     tissueMask = thumbnailGray < max(val,0.8)
@@ -82,25 +83,62 @@ def analyze(imgpath,model):
     writeXML(outputname2, outputsVec)
     return (counter2,counter1)
 
-def main():
+def main(args):
     params=hyperparameterModel.hyperparameterModel()
-    print  (sys.argv)
-    outputpath = ''
-    outputFile = outputpath + 'ver5'
+    #print  (sys.argv)
+    #outputpath = ''
+    #outputFile = outputpath + 'ver5'
+    outputFile = args.modpath 
     # Model training
 
     tflearn.init_graph()
     g = classificationModel3.createModel(params)
     model = tflearn.DNN(g)
     model.load(outputFile)
-    files = glob.glob("D:/DATA/testForLopez/*.svs")
-    f = open('output/outputlogs.txt', 'w')
+    files = glob.glob(args.inpath.rstrip("/") + "/*.svs")
+    f = open(args.outpath.rstrip("/") + '/outputlogs.txt', 'w')
     for myfile in files:
         print (myfile)
-        results=analyze(myfile,model)
+        results=analyze(myfile,model,args.kernel)
         f.write((myfile+' ' +str(results[0])+' '+ str(results[1])+'\n'))
 
     f.close()
 
 if __name__ == "__main__":
-    main()
+        """ This is executed when run from the command line """
+    parser = argparse.ArgumentParser()
+
+    # Required positional argument
+    parser.add_argument(
+        "-i",
+        "--inpath",
+        action="store",
+        help="Path to input SVS files"
+    )
+    
+    parser.add_argument(
+        "-o",
+        "--outpath",
+        action="store",
+        help="Path for output files"
+    )
+    
+    parser.add_argument(
+        "-k",
+        "--kernel",
+        action="store",
+        default = 64,
+        help="Kernel size (default = 64)"
+    )
+    
+    parser.add_argument(
+        "-m",
+        "--modpath",
+        action="store",
+        default = "/opt/deepfocus/ver5",
+        help="Path to the trained model"
+    )
+    
+    
+    args = parser.parse_args()
+    main(args)
