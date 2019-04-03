@@ -26,9 +26,9 @@ def writeXML(filename,data):
 def analyze(imgpath,model,args):
 
     imgname=os.path.basename(imgpath)
-    kernelSize=args.kernel;
-    kernelStepSize=1;
-    bufferVal = 8# will load kernelSize x bufferVal
+    kernelSize=args.kernel
+    kernelStepSize=1
+    bufferVal = 8 # will load kernelSize x bufferVal
     stepsize=1
     starttime=time.time()
 
@@ -102,7 +102,7 @@ def main(args):
     f = open(args.outpath.rstrip("/") + '/outputlogs.txt', 'w')
     for myfile in files:
         print (myfile)
-        results=analyze(myfile,model,args.kernel)
+        results=analyze(myfile,model,args)
         f.write((myfile+' ' +str(results[0])+' '+ str(results[1])+'\n'))
 
     f.close()
