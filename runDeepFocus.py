@@ -67,7 +67,10 @@ def analyze(imgpath,model,kernelSize):
             blocks = np.lib.stride_tricks.as_strided(bigTile, shape=shape, strides=strides)
             blocks= blocks.reshape(blocks.shape[0]*blocks.shape[1], blocks.shape[2], blocks.shape[3], blocks.shape[4])
             predictions = model.predict(blocks)
-            outputsVec=outputsVec+predictions
+            if outputsVec == []:
+                outputsVec = predictions
+            else:    
+                outputsVec = outputsVec+predictions
             qwe = np.array(predictions)
             qwe = qwe.reshape(int(h / bh/stepsize), int(w / bw / stepsize),2)
             counter1= counter1 + sum(np.array(predictions)[:,1]>0.5)
