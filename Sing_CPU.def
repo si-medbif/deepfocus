@@ -13,7 +13,8 @@ ORIGINAL_SOURCE https://github.com/cialab/deepfocus
 %post
     apt-get update && apt-get install -y --no-install-recommends \
             python3-dev python3-pip git openslide-tools \
-            build-essential python3-setuptools nano
+            build-essential python3-setuptools 
+            
     pip3 install wheel
     pip3 install numpy 
     pip3 install scipy  
@@ -26,5 +27,25 @@ ORIGINAL_SOURCE https://github.com/cialab/deepfocus
     
     # Get DeepFocus scripts
     cd /opt && git clone https://github.com/si-medbif/deepfocus.git
-    #apt-get remove -y python3-pip git
-    #rm -rf /var/lib/apt/lists/*
+    apt-get remove -y python3-pip git
+    rm -rf /var/lib/apt/lists/*
+
+# =======================
+# 0.1 Check quality of svs slide images with deepfocus
+# =======================
+
+%appenv deepfocus
+    DEEP_PY=/opt/deepfocus/runDeepFocus.py
+    export DEEP_PY
+
+%apphelp deepfocus
+    Mandatory parameters:
+        -i is the path to SVS files to be analyzed
+        -o is the path for saving output files
+        
+    Optional parameters:
+        -k is the kernel size (default = 64)
+        -m is the path to trained model (default is built-in model from deepfocus publication "ver5")
+
+%apprun deepfocus
+    python $DEEP_PY "$@"
