@@ -26,7 +26,7 @@ def writeXML(filename,data):
 def analyze(imgpath,model,args):
 
     imgname=os.path.basename(imgpath)
-    kernelSize=args.kernel
+    kernelSize=int(args.kernel)
     kernelStepSize=1
     bufferVal = 8 # will load kernelSize x bufferVal
     stepsize=1
