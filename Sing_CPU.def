@@ -48,4 +48,4 @@ ORIGINAL_SOURCE https://github.com/cialab/deepfocus
         -m is the path to trained model (default is built-in model from deepfocus publication "ver5")
 
 %apprun deepfocus
-    python $DEEP_PY "$@"
+    python3 $DEEP_PY "$@"
