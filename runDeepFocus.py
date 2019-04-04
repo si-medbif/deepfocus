@@ -38,7 +38,7 @@ def analyze(imgpath,model,args):
     thumbnailGray = color.rgb2gray(thumbnail)
     val = filters.threshold_otsu(thumbnailGray)
     tissueMask = thumbnailGray < max(val,0.8)
-    plt.imsave('tissue.png', tissueMask) #save the thumb of tissue mask
+    plt.imsave(args.outpath.rstrip("/") +'/tissue.png', tissueMask) #save the thumb of tissue mask
 
     buffersize=kernelSize*bufferVal;
     resultMask = thumbnail.astype(numpy.uint8) * 0;
